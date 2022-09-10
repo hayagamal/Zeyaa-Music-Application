@@ -1,0 +1,70 @@
+<button type="button" class="btn btn-default" onclick="doLike();">
+<i class="fa fa-thumbs-up"></i>
+<span id="likes"><%=audio.likers.length%></span>
+</button>
+
+<button type="button" class="btn btn-default" onclick="doDislike();">
+    <i class="fa fa-thumbs-down"></i>
+    <span id="dislikes"><%=audio.dislikers.length%></span>
+    </button>
+    
+    <script type="text/javascript">
+function doLike(){
+    var ajax= new XMLHttpRequest();
+    ajax.open("POST","/do-like",true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    ajax.onreadystatechange= function(){
+        if(this.readyState == 4 && this.status== 200){
+            var response= JSON.parse(this.responseText);
+            if(response.status == "success"){
+                    //update likes
+                    var likes= document.getElementById("likes").innerHTML;
+                    likes= parseInt(likes);
+                    likes++;
+                    
+                    if(likes!=1){
+                        alert("You have Already liked this song.");
+                        likes=1;
+                    }
+                    document.getElementById("likes").innerHTML= likes;
+            }
+            else{
+                alert(response.message);
+            }
+        }
+    }
+    
+    var audioId = document.getElementById("audioId").value;
+    ajax.send("audioId="+audioId);
+}
+
+
+function doDislike(){
+    var ajax= new XMLHttpRequest();
+    ajax.open("POST","/do-dislike",true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    ajax.onreadystatechange= function(){
+        if(this.readyState == 4 && this.status== 200){
+            var response= JSON.parse(this.responseText);
+            if(response.status == "success"){
+                    //update dislikes
+                    var dislikes= document.getElementById("dislikes").innerHTML;
+                    dislikes= parseInt(dislikes);
+                    dislikes++;
+                    if(dislikes!=1){
+                        alert("You have Already disliked this song.");
+                        dislikes=1;
+                    }
+                    
+                    document.getElementById("dislikes").innerHTML= dislikes;
+            }
+            else{
+                alert(response.message);
+            }
+        }
+    }
+    
+    var audioId = document.getElementById("audioId").value;
+    ajax.send("audioId="+audioId);
+}
+    </script>

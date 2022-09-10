@@ -1,0 +1,54 @@
+<%- include ("layouts/header") %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-12">
+      <h1>Upload Music</h1>
+
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label>Select Audio</label>
+          <input type="file" name="audio" accept="audio/*" class="form-control-file" required>
+        </div>
+
+        <div class="form-group">
+          <label>Select Thumbnail</label>
+          <input type="file" name="thumbnail" accept="image/*" class="form-control-file" required>
+        </div>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" name="title" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea type="text" name="description" class="form-control" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Tags</label>
+          <input type="text" name="tags" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+          <label>Genre</label>
+          <select name="genre" class="form-control" required>
+            <option value="Jazz">Jazz</option>
+            <option value="Rock">Rock</option>
+            <option value="Pop">Pop</option>
+            <option value="Blues">Blues</option>
+            <option value="Hip Hop">Hip Hop</option>
+            <option value="Classical">Classical</option>
+            <option value="Country">Country</option>
+          </select>
+        </div>
+
+
+        <input type="submit" class="btn btn-primary" value="Upload">
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include ("layouts/footer") %> -->

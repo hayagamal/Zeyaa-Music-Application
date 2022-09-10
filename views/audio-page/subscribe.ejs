@@ -1,0 +1,27 @@
+<button class="btn btn-danger" type="button" onclick="doSubscribe();">Subscribe
+    <strong id="total-subscribers" onload="loadSubscribers();"><%= audio.user.subscribers %></strong>
+  </button>
+  <script>
+    function doSubscribe() {
+      var ajax = new XMLHttpRequest();
+      ajax.open("POST", "/do-subscribe", true);
+      ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      ajax.onreadystatechange = function () {
+
+        if (this.readyState == 4 && this.status == 200) {
+          var response = JSON.parse(this.responseText);
+          
+          if (response.status == "success") {
+            console.log(response);
+            var element = document.getElementById("total-subscribers").innerHTML;
+            document.getElementById("total-subscribers").innerHTML = parseInt(element) +1;
+          } else {
+            alert(response.message);
+          }
+        }
+      };
+      
+      var audioId = window.parent.document.getElementById("audioId").value;
+      ajax.send(audioId);
+    }
+  </script>

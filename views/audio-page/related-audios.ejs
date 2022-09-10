@@ -1,0 +1,37 @@
+<div class="card my-4">
+    <h5 class="card-header">Related Audios</h5>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12" id="related-audios">
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+      
+    var genre = window.parent.document.getElementById("genre").value;
+    var audioId = window.parent.document.getElementById("audioId").value;
+    console.log(genre);
+    console.log(audioId);
+    var ajax = new XMLHttpRequest();
+    ajax.open("GET", "/get-related-audios?genre=" + genre+"&audioId="+audioId, true);
+    ajax.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var audios = JSON.parse(this.responseText);       
+        var html = "";
+        for (var a = 0; a < audios.length; a++) {
+          if(audios[a]._id !== audioId){
+            html += '<div>';
+            html += '<img class="img-fluid" src="' + "../" + audios[a].thumbnail + '"/>';
+            html += '<p>' + audios[a].minutes + ":" + audios[a].seconds + '</p>';
+            html += '<h4><a href="/watch/' + audios[a].watch + '">' + audios[a].title + '</a></h4>';
+            html += '</div>';
+          }
+        }
+        document.getElementById("related-audios").innerHTML = html;
+      }
+    };
+    ajax.send();
+  </script>
+  
